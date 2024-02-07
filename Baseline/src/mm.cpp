@@ -1,8 +1,8 @@
-
-#define BUFFER_SIZE_M 1024
-#define BUFFER_SIZE_K 1024
-#define BUFFER_SIZE_N 1024
-#define DATA_SIZE 1024
+#include "mm.h"
+#define BUFFER_SIZE_M 64
+#define BUFFER_SIZE_K 64
+#define BUFFER_SIZE_N 64
+#define DATA_SIZE     64
 #define iter 1
 
 // TRIPCOUNT identifier
@@ -13,17 +13,17 @@ const unsigned int c_len = DATA_SIZE * DATA_SIZE;
 
 
 extern "C" {
-void matrix_multiply(const unsigned int *in0, // Read-Only matrix 0
-          const unsigned int *in1, // Read-Only matrix 1
+void matrix_multiply(unsigned int *in0, // Read-Only matrix 0
+          unsigned int *in1, // Read-Only matrix 1
           unsigned int *out0,// Output Result
           int M,                    // Size in integer
           int K,                    // Size in integer
           int N                    // Size in integer
           ) {
 
-#pragma HLS INTERFACE m_axi port = in0 offset = slave bundle = gmem0
-#pragma HLS INTERFACE m_axi port = in1 offset = slave bundle = gmem1
-#pragma HLS INTERFACE m_axi port = out0 offset = slave bundle = gmem2
+#pragma HLS INTERFACE m_axi port = in0 offset = slave bundle = gmem0  depth=16384
+#pragma HLS INTERFACE m_axi port = in1 offset = slave bundle = gmem1  depth=16384
+#pragma HLS INTERFACE m_axi port = out0 offset = slave bundle = gmem2 depth=16384
 #pragma HLS INTERFACE s_axilite port = in0 bundle = control
 #pragma HLS INTERFACE s_axilite port = in1 bundle = control
 #pragma HLS INTERFACE s_axilite port = out0 bundle = control

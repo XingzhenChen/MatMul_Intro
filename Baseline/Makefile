@@ -84,6 +84,7 @@ GCC_LIB := -lxaiengine -ladf_api_xrt -lxrt_core -lxrt_coreutil \
 CXX := $(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++
 
 
+
 CLFLAGS += -t $(TARGET) --platform $(PLATFORM) --save-temps --optimize 2
 ifneq ($(TARGET), hw)
 	CLFLAGS += -g
@@ -147,6 +148,11 @@ $(BUILD_DIR)/${XCLBIN}: ${KERNEL_XO}
 	mkdir -p $(BUILD_DIR)
 	v++ -l $(CLFLAGS) --temp_dir $(BUILD_DIR) $(LDCLFLAGS) -o'$@' $(+) | tee $(BUILD_DIR)/hpc_xclbin.log
 
+plcsim:
+	vitis_hls -f tcl/sw_emu.tcl
+
+plcosim:
+	vitis_hls -f tcl/hw_emu.tcl
 
 aiehost: $(AIE_HOSTEXE)
 ifneq ($(PRE_BUILT),1)
@@ -200,7 +206,7 @@ clean:
 	-$(RMDIR)  *v++* .Xil emconfig.json dltmp* xmltmp* *.log *.jou *.wcfg *.wdb *bin* *summary* *.BIN *.bif *.exe  *.log *.txt _x
 
 cleanall: clean
-	-$(RMDIR) build_dir* sd_card*
+	-$(RMDIR) build_dir* sd_card* hls_top
 	-$(RMDIR) package.hw run_app.sh 
 	-$(RMDIR) *xclbin.run_summary qemu-memory-_* emulation _vimage pl* start_simulation.sh *.xclbin
 	-$(RMDIR) _x.*
