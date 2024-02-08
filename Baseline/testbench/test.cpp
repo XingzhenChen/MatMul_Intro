@@ -7,7 +7,7 @@ int main(){
     unsigned int* LHS = (unsigned int*) malloc(sizeof(unsigned int) * DATA_SIZE * DATA_SIZE);
     unsigned int* RHS = (unsigned int*) malloc(sizeof(unsigned int) * DATA_SIZE * DATA_SIZE);
     unsigned int* OUT = (unsigned int*) malloc(sizeof(unsigned int) * DATA_SIZE * DATA_SIZE);
-    unsigned int* GoldenOUT = (unsigned int*) malloc(sizeof(unsigned int) * DATA_SIZE * DATA_SIZE)
+    unsigned int* GoldenOUT = (unsigned int*) malloc(sizeof(unsigned int) * DATA_SIZE * DATA_SIZE);
 
 
     //generate random data
@@ -33,7 +33,7 @@ int main(){
 
     //test result data
     int count = 0;
-    printf("#######################\n")
+    printf("#######################\n");
     for(int i = 0; i < DATA_SIZE * DATA_SIZE; i++){
         if (OUT[i]!=GoldenOUT[i]){
             count++;
@@ -41,7 +41,7 @@ int main(){
         }
     }
     printf("Error Num: %d\n", count);
-    printf("#######################\n")
+    printf("#######################\n");
 
     //free allocated memory
     free(GoldenOUT);
